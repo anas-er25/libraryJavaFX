@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="10" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.controller.StudentBooksController">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    <Label text="My Borrowed Books" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <!-- Table for Listing Borrowed Books -->
+    <TableView fx:id="booksTable">
+        <columns>
+            <TableColumn fx:id="bookIdColumn" text="Book ID"/>
+            <TableColumn fx:id="titleColumn" text="Title"/>
+            <TableColumn fx:id="authorColumn" text="Author"/>
+            <TableColumn fx:id="loanDateColumn" text="Loan Date"/>
+            <TableColumn fx:id="returnDateColumn" text="Return Date"/>
+        </columns>
+    </TableView>
+</VBox>
