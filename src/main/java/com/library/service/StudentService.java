@@ -9,6 +9,10 @@ import java.util.List;
 public class StudentService {
     private final StudentDAO studentDAO = new StudentDAO();
 
+    public List<Student> getAllStudents() throws SQLException {
+        return studentDAO.getAllStudents();
+    }
+
     public void addStudent(Student student) throws SQLException {
         studentDAO.addStudent(student);
     }
@@ -21,7 +25,7 @@ public class StudentService {
         studentDAO.deleteStudent(id);
     }
 
-    public List<Student> getAllStudents() throws SQLException {
-        return studentDAO.getAllStudents();
+    public boolean emailExists(String email) throws SQLException {
+        return studentDAO.emailExists(email);
     }
 }
