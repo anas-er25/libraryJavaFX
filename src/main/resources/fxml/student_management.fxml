@@ -7,28 +7,37 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.effect.DropShadow?>
 
-<VBox spacing="10" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.controller.StudentController">
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
-    <Label text="Manage Students" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-    <HBox spacing="10">
-        <TextField fx:id="nameField" promptText="Name"/>
-        <TextField fx:id="emailField" promptText="Email"/>
-        <ComboBox fx:id="userComboBox" promptText="Select User" style="-fx-pref-width: 150px;"/>
-        <Button text="Add Student" onAction="#addStudent"/>
-        <Button text="Update Student" onAction="#updateStudent"/>
-    </HBox>
-    <TableView fx:id="studentTable">
-        <columns>
-            <TableColumn fx:id="idColumn" text="ID"/>
-            <TableColumn fx:id="nameColumn" text="Name"/>
-            <TableColumn fx:id="emailColumn" text="Email"/>
-            <TableColumn fx:id="userIdColumn" text="Username"/>
-        </columns>
-    </TableView>
-    <Button text="Delete Selected" onAction="#deleteStudent"/>
-</VBox>
+<BorderPane style="-fx-background-color: linear-gradient(to bottom, #e6f3ff, #b3d9ff);" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.controller.StudentController">
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="15" maxWidth="800" style="-fx-background-color: #ffffff; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 30; -fx-border-color: #cccccc; -fx-border-width: 1;">
+            <effect>
+                <DropShadow radius="10" color="#00000033"/>
+            </effect>
+            <padding>
+                <Insets top="30" right="30" bottom="30" left="30"/>
+            </padding>
+            <Label text="Manage Students" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-alignment: center;"/>
+            <HBox spacing="10" alignment="CENTER">
+                <TextField fx:id="nameField" promptText="Name" style="-fx-pref-width: 200; -fx-pref-height: 40; -fx-background-color: #f9f9f9; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 14px; -fx-padding: 10;"/>
+                <TextField fx:id="emailField" promptText="Email" style="-fx-pref-width: 200; -fx-pref-height: 40; -fx-background-color: #f9f9f9; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 14px; -fx-padding: 10;"/>
+                <ComboBox fx:id="userComboBox" promptText="Select User" style="-fx-pref-width: 200; -fx-pref-height: 40; -fx-background-color: #f9f9f9; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 14px; -fx-padding: 5;"/>
+                <Button text="Add Student" onAction="#addStudent" style="-fx-pref-width: 120; -fx-pref-height: 40; -fx-background-color: #2ecc71; -fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;"/>
+                <Button text="Update Student" onAction="#updateStudent" style="-fx-pref-width: 120; -fx-pref-height: 40; -fx-background-color: #3498db; -fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;"/>
+            </HBox>
+            <TableView fx:id="studentTable" style="-fx-pref-height: 300; -fx-background-color: #f9f9f9; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5;">
+                <columns>
+                    <TableColumn fx:id="idColumn" text="ID" style="-fx-alignment: CENTER;"/>
+                    <TableColumn fx:id="nameColumn" text="Name" style="-fx-alignment: CENTER-LEFT;"/>
+                    <TableColumn fx:id="emailColumn" text="Email" style="-fx-alignment: CENTER-LEFT;"/>
+                    <TableColumn fx:id="userIdColumn" text="Username" style="-fx-alignment: CENTER-LEFT;"/>
+                </columns>
+            </TableView>
+            <Button text="Delete Selected" onAction="#deleteStudent" style="-fx-pref-width: 150; -fx-pref-height: 40; -fx-background-color: #3498db; -fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;"/>
+        </VBox>
+    </center>
+</BorderPane>

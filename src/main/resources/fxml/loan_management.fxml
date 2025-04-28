@@ -7,30 +7,39 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.effect.DropShadow?>
 
-<VBox spacing="10" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.controller.LoanController">
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
-    <Label text="Manage Loans" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-    <HBox spacing="10">
-        <ComboBox fx:id="studentComboBox" promptText="Select Student" style="-fx-pref-width: 150px;"/>
-        <ComboBox fx:id="bookComboBox" promptText="Select Book" style="-fx-pref-width: 150px;"/>
-        <TextField fx:id="loanDateField" promptText="Loan Date (YYYY-MM-DD)"/>
-        <TextField fx:id="returnDateField" promptText="Return Date (YYYY-MM-DD)"/>
-        <Button text="Add Loan" onAction="#addLoan"/>
-        <Button text="Update Loan" onAction="#updateLoan"/>
-    </HBox>
-    <TableView fx:id="loanTable">
-        <columns>
-            <TableColumn fx:id="idColumn" text="ID"/>
-            <TableColumn fx:id="studentIdColumn" text="Student"/>
-            <TableColumn fx:id="bookIdColumn" text="Book"/>
-            <TableColumn fx:id="loanDateColumn" text="Loan Date"/>
-            <TableColumn fx:id="returnDateColumn" text="Return Date"/>
-        </columns>
-    </TableView>
-    <Button text="Delete Selected" onAction="#deleteLoan"/>
-</VBox>
+<BorderPane style="-fx-background-color: linear-gradient(to bottom, #e6f3ff, #b3d9ff);" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.controller.LoanController">
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="15" maxWidth="900" style="-fx-background-color: #ffffff; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 30; -fx-border-color: #cccccc; -fx-border-width: 1;">
+            <effect>
+                <DropShadow radius="10" color="#00000033"/>
+            </effect>
+            <padding>
+                <Insets top="30" right="30" bottom="30" left="30"/>
+            </padding>
+            <Label text="Manage Loans" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-alignment: center;"/>
+            <HBox spacing="10" alignment="CENTER">
+                <ComboBox fx:id="studentComboBox" promptText="Select Student" style="-fx-pref-width: 200; -fx-pref-height: 40; -fx-background-color: #f9f9f9; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 14px; -fx-padding: 5;"/>
+                <ComboBox fx:id="bookComboBox" promptText="Select Book" style="-fx-pref-width: 200; -fx-pref-height: 40; -fx-background-color: #f9f9f9; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 14px; -fx-padding: 5;"/>
+                <TextField fx:id="loanDateField" promptText="Loan Date (YYYY-MM-DD)" style="-fx-pref-width: 200; -fx-pref-height: 40; -fx-background-color: #f9f9f9; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 14px; -fx-padding: 10;"/>
+                <TextField fx:id="returnDateField" promptText="Return Date (YYYY-MM-DD)" style="-fx-pref-width: 200; -fx-pref-height: 40; -fx-background-color: #f9f9f9; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 14px; -fx-padding: 10;"/>
+                <Button text="Add Loan" onAction="#addLoan" style="-fx-pref-width: 120; -fx-pref-height: 40; -fx-background-color: #2ecc71; -fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;"/>
+                <Button text="Update Loan" onAction="#updateLoan" style="-fx-pref-width: 120; -fx-pref-height: 40; -fx-background-color: #3498db; -fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;"/>
+            </HBox>
+            <TableView fx:id="loanTable" style="-fx-pref-height: 300; -fx-background-color: #f9f9f9; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5;">
+                <columns>
+                    <TableColumn fx:id="idColumn" text="ID" style="-fx-alignment: CENTER;"/>
+                    <TableColumn fx:id="studentIdColumn" text="Student" style="-fx-alignment: CENTER-LEFT;"/>
+                    <TableColumn fx:id="bookIdColumn" text="Book" style="-fx-alignment: CENTER-LEFT;"/>
+                    <TableColumn fx:id="loanDateColumn" text="Loan Date" style="-fx-alignment: CENTER;"/>
+                    <TableColumn fx:id="returnDateColumn" text="Return Date" style="-fx-alignment: CENTER;"/>
+                </columns>
+            </TableView>
+            <Button text="Delete Selected" onAction="#deleteLoan" style="-fx-pref-width: 150; -fx-pref-height: 40; -fx-background-color: #3498db; -fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;"/>
+        </VBox>
+    </center>
+</BorderPane>
