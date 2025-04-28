@@ -11,42 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentDAO {
-    public void addStudent(Student student) throws SQLException {
-        String sql = "INSERT INTO students (name, email, user_id) VALUES (?, ?, ?)";
-        try (Connection conn = DatabaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, student.getName());
-            stmt.setString(2, student.getEmail());
-            stmt.setInt(3, student.getUserId());
-            stmt.executeUpdate();
-        }
-    }
-
-    public void updateStudent(Student student) throws SQLException {
-        String sql = "UPDATE students SET name = ?, email = ? WHERE id = ?";
-        try (Connection conn = DatabaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, student.getName());
-            stmt.setString(2, student.getEmail());
-            stmt.setInt(3, student.getId());
-            stmt.executeUpdate();
-        }
-    }
-
-    public void deleteStudent(int id) throws SQLException {
-        String sql = "DELETE FROM students WHERE id = ?";
-        try (Connection conn = DatabaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-        }
-    }
-
     public List<Student> getAllStudents() throws SQLException {
         List<Student> students = new ArrayList<>();
-        String sql = "SELECT * FROM students";
+        String query = "SELECT * FROM students";
         try (Connection conn = DatabaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
+             PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 Student student = new Student();
@@ -58,5 +27,51 @@ public class StudentDAO {
             }
         }
         return students;
+    }
+
+    public void addStudent(Student student) throws SQLException {
+        String query = "INSERT INTO students (name, email, user_id) VALUES (?, ?, ?)";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, student.getName());
+            stmt.setString(2, student.getEmail());
+            stmt.setInt(3, student.getUserId());
+            stmt.executeUpdate();
+        }
+    }
+
+    public void updateStudent(Student student) throws SQLException {
+        String query = "UPDATE students SET name = ?, email = ?, user_id = ? WHERE id = ?";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, student.getName());
+            stmt.setString(2, student.getEmail());
+            stmt.setInt(3, student.getUserId());
+            stmt.setInt(4, student.getId());
+            stmt.executeUpdate();
+        }
+    }
+
+    public void deleteStudent(int id) throws SQLException {
+        String query = "DELETE FROM students WHERE id = ?";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        }
+    }
+
+    public boolean emailExists(String email) throws SQLException {
+        String query = "SELECT COUNT(*) FROM students WHERE email = ?";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        }
+        return false;
     }
 }

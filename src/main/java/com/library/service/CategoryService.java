@@ -9,6 +9,10 @@ import java.util.List;
 public class CategoryService {
     private final CategoryDAO categoryDAO = new CategoryDAO();
 
+    public List<Category> getAllCategories() throws SQLException {
+        return categoryDAO.getAllCategories();
+    }
+
     public void addCategory(Category category) throws SQLException {
         categoryDAO.addCategory(category);
     }
@@ -21,7 +25,7 @@ public class CategoryService {
         categoryDAO.deleteCategory(id);
     }
 
-    public List<Category> getAllCategories() throws SQLException {
-        return categoryDAO.getAllCategories();
+    public boolean categoryNameExists(String name) throws SQLException {
+        return categoryDAO.categoryNameExists(name);
     }
 }
