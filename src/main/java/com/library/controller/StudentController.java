@@ -1,11 +1,13 @@
 package com.library.controller;
 
 import com.library.model.Student;
+import com.library.model.User;
 import com.library.service.StudentService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -16,15 +18,16 @@ import java.sql.SQLException;
 public class StudentController {
     @FXML private TextField nameField;
     @FXML private TextField emailField;
-    @FXML private TextField userIdField;
+    @FXML private ComboBox<User> userComboBox;
     @FXML private TableView<Student> studentTable;
     @FXML private TableColumn<Student, Integer> idColumn;
     @FXML private TableColumn<Student, String> nameColumn;
     @FXML private TableColumn<Student, String> emailColumn;
-    @FXML private TableColumn<Student, Integer> userIdColumn;
+    @FXML private TableColumn<Student, String> userIdColumn;
 
     private final StudentService studentService = new StudentService();
     private ObservableList<Student> studentList = FXCollections.observableArrayList();
+    private ObservableList<User> userList = FXCollections.observableArrayList();
 
     @FXML
     private void initialize() {
@@ -32,17 +35,31 @@ public class StudentController {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-        userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        userIdColumn.setCellValueFactory(cellData -> {
+            try {
+                return new javafx.beans.property.SimpleStringProperty(
+                        studentService.getUsername(cellData.getValue().getUserId()));
+            } catch (SQLException e) {
+                return new javafx.beans.property.SimpleStringProperty("");
+            }
+        });
 
-        // Load students
+        // Load students and users
         loadStudents();
+        loadUsers();
 
         // Select row to populate form
         studentTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 nameField.setText(newSelection.getName());
                 emailField.setText(newSelection.getEmail());
-                userIdField.setText(String.valueOf(newSelection.getUserId()));
+                // Select the user in the ComboBox
+                userComboBox.getSelectionModel().select(
+                        userList.stream()
+                                .filter(u -> u.getId() == newSelection.getUserId())
+                                .findFirst()
+                                .orElse(null)
+                );
             }
         });
     }
@@ -56,24 +73,39 @@ public class StudentController {
         }
     }
 
+    private void loadUsers() {
+        try {
+            userList.setAll(studentService.getAllUsers());
+            userComboBox.setItems(userList);
+            // Set display text for ComboBox
+            userComboBox.setCellFactory(cb -> new javafx.scene.control.ListCell<User>() {
+                @Override
+                protected void updateItem(User item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty || item == null ? "" : item.getUsername());
+                }
+            });
+            userComboBox.setButtonCell(new javafx.scene.control.ListCell<User>() {
+                @Override
+                protected void updateItem(User item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty || item == null ? "" : item.getUsername());
+                }
+            });
+        } catch (SQLException e) {
+            showErrorAlert("Database Error", "Failed to load users: " + e.getMessage());
+        }
+    }
+
     @FXML
     private void addStudent() {
         String name = nameField.getText().trim();
         String email = emailField.getText().trim();
-        String userIdText = userIdField.getText().trim();
+        User selectedUser = userComboBox.getSelectionModel().getSelectedItem();
 
         // Validate required fields
-        if (name.isEmpty() || email.isEmpty() || userIdText.isEmpty()) {
+        if (name.isEmpty() || email.isEmpty() || selectedUser == null) {
             showErrorAlert("Validation Error", "All fields are required.");
-            return;
-        }
-
-        // Validate userId format
-        int userId;
-        try {
-            userId = Integer.parseInt(userIdText);
-        } catch (NumberFormatException e) {
-            showErrorAlert("Validation Error", "User ID must be a valid number.");
             return;
         }
 
@@ -87,7 +119,7 @@ public class StudentController {
             Student student = new Student();
             student.setName(name);
             student.setEmail(email);
-            student.setUserId(userId);
+            student.setUserId(selectedUser.getId());
             studentService.addStudent(student);
             loadStudents();
             clearFields();
@@ -98,42 +130,33 @@ public class StudentController {
 
     @FXML
     private void updateStudent() {
-        Student selected = studentTable.getSelectionModel().getSelectedItem();
-        if (selected == null) {
+        Student selectedStudent = studentTable.getSelectionModel().getSelectedItem();
+        if (selectedStudent == null) {
             showErrorAlert("Selection Error", "Please select a student to update.");
             return;
         }
 
         String name = nameField.getText().trim();
         String email = emailField.getText().trim();
-        String userIdText = userIdField.getText().trim();
+        User selectedUser = userComboBox.getSelectionModel().getSelectedItem();
 
         // Validate required fields
-        if (name.isEmpty() || email.isEmpty() || userIdText.isEmpty()) {
+        if (name.isEmpty() || email.isEmpty() || selectedUser == null) {
             showErrorAlert("Validation Error", "All fields are required.");
-            return;
-        }
-
-        // Validate userId format
-        int userId;
-        try {
-            userId = Integer.parseInt(userIdText);
-        } catch (NumberFormatException e) {
-            showErrorAlert("Validation Error", "User ID must be a valid number.");
             return;
         }
 
         try {
             // Check email uniqueness (exclude current student)
-            if (!email.equals(selected.getEmail()) && studentService.emailExists(email)) {
+            if (!email.equals(selectedStudent.getEmail()) && studentService.emailExists(email)) {
                 showErrorAlert("Validation Error", "A student with this email already exists.");
                 return;
             }
 
-            selected.setName(name);
-            selected.setEmail(email);
-            selected.setUserId(userId);
-            studentService.updateStudent(selected);
+            selectedStudent.setName(name);
+            selectedStudent.setEmail(email);
+            selectedStudent.setUserId(selectedUser.getId());
+            studentService.updateStudent(selectedStudent);
             loadStudents();
             clearFields();
         } catch (SQLException e) {
@@ -161,7 +184,7 @@ public class StudentController {
     private void clearFields() {
         nameField.clear();
         emailField.clear();
-        userIdField.clear();
+        userComboBox.getSelectionModel().clearSelection();
     }
 
     private void showErrorAlert(String title, String content) {

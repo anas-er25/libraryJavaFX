@@ -1,13 +1,14 @@
 package com.library.dao;
 
+import com.library.model.Book;
 import com.library.model.Loan;
+import com.library.model.Student;
 import com.library.util.DatabaseUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +66,99 @@ public class LoanDAO {
         }
     }
 
+    public List<Book> getAllBooks() throws SQLException {
+        List<Book> books = new ArrayList<>();
+        String query = "SELECT * FROM books";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Book book = new Book();
+                book.setId(rs.getInt("id"));
+                book.setTitle(rs.getString("title"));
+                book.setAuthor(rs.getString("author"));
+                book.setCategoryId(rs.getInt("category_id"));
+                books.add(book);
+            }
+        }
+        return books;
+    }
+
+    public String getBookTitle(int bookId) throws SQLException {
+        String query = "SELECT title FROM books WHERE id = ?";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, bookId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("title");
+                }
+            }
+        }
+        return "";
+    }
+
+    public String getStudentName(int studentId) throws SQLException {
+        String query = "SELECT name FROM students WHERE id = ?";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, studentId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("name");
+                }
+            }
+        }
+        return "";
+    }
+
+    public boolean studentExists(int studentId) throws SQLException {
+        String query = "SELECT COUNT(*) FROM students WHERE id = ?";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, studentId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean activeLoanExists(int studentId, int bookId) throws SQLException {
+        String query = "SELECT COUNT(*) FROM loans WHERE student_id = ? AND book_id = ? AND return_date IS NULL";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, studentId);
+            stmt.setInt(2, bookId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        }
+        return false;
+    }
+
+    public List<Student> getAllStudents() throws SQLException {
+        List<Student> students = new ArrayList<>();
+        String query = "SELECT * FROM students";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Student student = new Student();
+                student.setId(rs.getInt("id"));
+                student.setName(rs.getString("name"));
+                student.setEmail(rs.getString("email"));
+                student.setUserId(rs.getInt("user_id"));
+                students.add(student);
+            }
+        }
+        return students;
+    }
+
     public List<Loan> getLoansByStudentId(int studentId) throws SQLException {
         List<Loan> loans = new ArrayList<>();
         String query = "SELECT * FROM loans WHERE student_id = ?";
@@ -85,21 +179,6 @@ public class LoanDAO {
         }
         return loans;
     }
-
-    public String getBookTitle(int bookId) throws SQLException {
-        String query = "SELECT title FROM books WHERE id = ?";
-        try (Connection conn = DatabaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, bookId);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getString("title");
-                }
-            }
-        }
-        return "";
-    }
-
     public String getBookAuthor(int bookId) throws SQLException {
         String query = "SELECT author FROM books WHERE id = ?";
         try (Connection conn = DatabaseUtil.getConnection();
