@@ -1,7 +1,9 @@
 package com.library.service;
 
 import com.library.dao.LoanDAO;
+import com.library.model.Book;
 import com.library.model.Loan;
+import com.library.model.Student;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -25,13 +27,34 @@ public class LoanService {
         loanDAO.deleteLoan(id);
     }
 
-    public List<Loan> getLoansByStudentId(int studentId) throws SQLException {
-        return loanDAO.getLoansByStudentId(studentId);
+    public List<Book> getAllBooks() throws SQLException {
+        return loanDAO.getAllBooks();
     }
 
     public String getBookTitle(int bookId) throws SQLException {
         return loanDAO.getBookTitle(bookId);
     }
+
+    public String getStudentName(int studentId) throws SQLException {
+        return loanDAO.getStudentName(studentId);
+    }
+
+    public boolean studentExists(int studentId) throws SQLException {
+        return loanDAO.studentExists(studentId);
+    }
+
+    public boolean activeLoanExists(int studentId, int bookId) throws SQLException {
+        return loanDAO.activeLoanExists(studentId, bookId);
+    }
+
+    public List<Student> getAllStudents() throws SQLException {
+        return loanDAO.getAllStudents();
+    }
+
+    public List<Loan> getLoansByStudentId(int studentId) throws SQLException {
+        return loanDAO.getLoansByStudentId(studentId);
+    }
+
 
     public String getBookAuthor(int bookId) throws SQLException {
         return loanDAO.getBookAuthor(bookId);

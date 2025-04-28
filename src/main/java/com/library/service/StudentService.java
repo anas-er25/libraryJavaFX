@@ -2,6 +2,7 @@ package com.library.service;
 
 import com.library.dao.StudentDAO;
 import com.library.model.Student;
+import com.library.model.User;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -27,5 +28,13 @@ public class StudentService {
 
     public boolean emailExists(String email) throws SQLException {
         return studentDAO.emailExists(email);
+    }
+
+    public List<User> getAllUsers() throws SQLException {
+        return studentDAO.getAllUsers();
+    }
+
+    public String getUsername(int userId) throws SQLException {
+        return studentDAO.getUsername(userId);
     }
 }

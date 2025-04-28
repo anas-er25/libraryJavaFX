@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -14,27 +15,22 @@
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
     <Label text="Manage Loans" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-
-    <!-- Form for Add/Update -->
     <HBox spacing="10">
-        <TextField fx:id="studentIdField" promptText="Student ID"/>
-        <TextField fx:id="bookIdField" promptText="Book ID"/>
+        <ComboBox fx:id="studentComboBox" promptText="Select Student" style="-fx-pref-width: 150px;"/>
+        <ComboBox fx:id="bookComboBox" promptText="Select Book" style="-fx-pref-width: 150px;"/>
         <TextField fx:id="loanDateField" promptText="Loan Date (YYYY-MM-DD)"/>
         <TextField fx:id="returnDateField" promptText="Return Date (YYYY-MM-DD)"/>
         <Button text="Add Loan" onAction="#addLoan"/>
         <Button text="Update Loan" onAction="#updateLoan"/>
     </HBox>
-
-    <!-- Table for Listing -->
     <TableView fx:id="loanTable">
         <columns>
             <TableColumn fx:id="idColumn" text="ID"/>
-            <TableColumn fx:id="studentIdColumn" text="Student ID"/>
-            <TableColumn fx:id="bookIdColumn" text="Book ID"/>
+            <TableColumn fx:id="studentIdColumn" text="Student"/>
+            <TableColumn fx:id="bookIdColumn" text="Book"/>
             <TableColumn fx:id="loanDateColumn" text="Loan Date"/>
             <TableColumn fx:id="returnDateColumn" text="Return Date"/>
         </columns>
     </TableView>
-
     <Button text="Delete Selected" onAction="#deleteLoan"/>
 </VBox>
