@@ -24,7 +24,7 @@ public class StudentBooksController {
     private ObservableList<Loan> loanList = FXCollections.observableArrayList();
     private int studentId;
 
-    // Method to set the student ID (called by MainController)
+    // Méthode pour définir l'ID étudiant (appelée par MainController)
     public void setStudentId(int studentId) {
         this.studentId = studentId;
         loadStudentBooks();
@@ -32,7 +32,7 @@ public class StudentBooksController {
 
     @FXML
     private void initialize() {
-        // Set up table columns
+        // Configurer les colonnes du tableau
         bookIdColumn.setCellValueFactory(new PropertyValueFactory<>("bookId"));
         titleColumn.setCellValueFactory(cellData -> {
             try {
@@ -53,7 +53,7 @@ public class StudentBooksController {
         loanDateColumn.setCellValueFactory(new PropertyValueFactory<>("loanDate"));
         returnDateColumn.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
 
-        // Table data will be loaded after studentId is set
+        // Les données du tableau seront chargées une fois que studentId sera défini
     }
 
     private void loadStudentBooks() {

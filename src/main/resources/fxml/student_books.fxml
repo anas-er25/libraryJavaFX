@@ -4,22 +4,29 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.effect.DropShadow?>
 
-<VBox spacing="10" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.controller.StudentBooksController">
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
-    <Label text="My Borrowed Books" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-
-    <!-- Table for Listing Borrowed Books -->
-    <TableView fx:id="booksTable">
-        <columns>
-            <TableColumn fx:id="bookIdColumn" text="Book ID"/>
-            <TableColumn fx:id="titleColumn" text="Title"/>
-            <TableColumn fx:id="authorColumn" text="Author"/>
-            <TableColumn fx:id="loanDateColumn" text="Loan Date"/>
-            <TableColumn fx:id="returnDateColumn" text="Return Date"/>
-        </columns>
-    </TableView>
-</VBox>
+<BorderPane style="-fx-background-color: linear-gradient(to bottom, #e6f3ff, #b3d9ff);" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.controller.StudentBooksController">
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="15" maxWidth="800" style="-fx-background-color: #ffffff; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 30; -fx-border-color: #cccccc; -fx-border-width: 1;">
+            <effect>
+                <DropShadow radius="10" color="#00000033"/>
+            </effect>
+            <padding>
+                <Insets top="30" right="30" bottom="30" left="30"/>
+            </padding>
+            <Label text="My Borrowed Books" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-alignment: center;"/>
+            <TableView fx:id="booksTable" style="-fx-pref-height: 300; -fx-background-color: #f9f9f9; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5;">
+                <columns>
+                    <TableColumn fx:id="bookIdColumn" text="Book ID" style="-fx-alignment: CENTER;"/>
+                    <TableColumn fx:id="titleColumn" text="Title" style="-fx-alignment: CENTER-LEFT;"/>
+                    <TableColumn fx:id="authorColumn" text="Author" style="-fx-alignment: CENTER-LEFT;"/>
+                    <TableColumn fx:id="loanDateColumn" text="Loan Date" style="-fx-alignment: CENTER;"/>
+                    <TableColumn fx:id="returnDateColumn" text="Return Date" style="-fx-alignment: CENTER;"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

@@ -6,16 +6,25 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.effect.DropShadow?>
 
-<VBox alignment="CENTER" spacing="10" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.controller.RegisterController">
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
-    <Label text="Register New User" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-    <TextField fx:id="usernameField" promptText="Username"/>
-    <PasswordField fx:id="passwordField" promptText="Password"/>
-    <ChoiceBox fx:id="roleChoiceBox" prefWidth="150"/>
-    <Button text="Register" onAction="#handleRegister"/>
-    <Button text="Back to Login" onAction="#backToLogin"/>
-</VBox>
+<BorderPane style="-fx-background-color: linear-gradient(to bottom, #e6f3ff, #b3d9ff);" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.controller.RegisterController">
+    <center>
+        <VBox alignment="CENTER" spacing="15" maxWidth="350" maxHeight="450" style="-fx-background-color: #ffffff; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 30; -fx-border-color: #cccccc; -fx-border-width: 1;">
+            <effect>
+                <DropShadow radius="10" color="#00000033"/>
+            </effect>
+            <padding>
+                <Insets top="30" right="30" bottom="30" left="30"/>
+            </padding>
+            <Label text="Register New User" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-alignment: center;"/>
+            <TextField fx:id="usernameField" promptText="Username" style="-fx-pref-width: 250; -fx-pref-height: 40; -fx-background-color: #f9f9f9; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 14px; -fx-padding: 10;"/>
+            <PasswordField fx:id="passwordField" promptText="Password" style="-fx-pref-width: 250; -fx-pref-height: 40; -fx-background-color: #f9f9f9; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 14px; -fx-padding: 10;"/>
+            <ChoiceBox fx:id="roleChoiceBox" style="-fx-pref-width: 250; -fx-pref-height: 40; -fx-background-color: #f9f9f9; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 14px; -fx-padding: 5;"/>
+            <Button text="Register" onAction="#handleRegister" style="-fx-pref-width: 250; -fx-pref-height: 40; -fx-background-color: #2ecc71; -fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" />
+            <Button text="Back to Login" onAction="#backToLogin" style="-fx-pref-width: 250; -fx-pref-height: 40; -fx-background-color: #3498db; -fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" />
+        </VBox>
+    </center>
+</BorderPane>

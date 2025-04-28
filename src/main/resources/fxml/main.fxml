@@ -3,18 +3,27 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.effect.DropShadow?>
 
-<VBox spacing="20" alignment="CENTER" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.controller.MainController">
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
-    <Label text="Library Management Dashboard" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
-    <HBox spacing="15" alignment="CENTER">
-        <Button fx:id="studentsButton" text="Manage Students" onAction="#showStudents" style="-fx-pref-width: 150px;"/>
-        <Button fx:id="categoriesButton" text="Manage Categories" onAction="#showCategories" style="-fx-pref-width: 150px;"/>
-        <Button fx:id="booksButton" text="Manage Books" onAction="#showBooks" style="-fx-pref-width: 150px;"/>
-        <Button fx:id="loansButton" text="Manage Loans" onAction="#showLoans" style="-fx-pref-width: 150px;"/>
-    </HBox>
-</VBox>
+<BorderPane style="-fx-background-color: linear-gradient(to bottom, #e6f3ff, #b3d9ff);" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.controller.MainController">
+    <center>
+        <VBox alignment="CENTER" spacing="20" maxWidth="800" maxHeight="300" style="-fx-background-color: #ffffff; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 30; -fx-border-color: #cccccc; -fx-border-width: 1;">
+            <effect>
+                <DropShadow radius="10" color="#00000033"/>
+            </effect>
+            <padding>
+                <Insets top="30" right="30" bottom="30" left="30"/>
+            </padding>
+            <Label text="Library Management Dashboard" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-alignment: center;"/>
+            <HBox spacing="15" alignment="CENTER">
+                <Button fx:id="studentsButton" text="Manage Students" onAction="#showStudents" style="-fx-pref-width: 150; -fx-pref-height: 40; -fx-background-color: #3498db; -fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" />
+                <Button fx:id="categoriesButton" text="Manage Categories" onAction="#showCategories" style="-fx-pref-width: 150; -fx-pref-height: 40; -fx-background-color: #3498db; -fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" />
+                <Button fx:id="booksButton" text="Manage Books" onAction="#showBooks" style="-fx-pref-width: 150; -fx-pref-height: 40; -fx-background-color: #3498db; -fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" />
+                <Button fx:id="loansButton" text="Manage Loans" onAction="#showLoans" style="-fx-pref-width: 150; -fx-pref-height: 40; -fx-background-color: #3498db; -fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" />
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

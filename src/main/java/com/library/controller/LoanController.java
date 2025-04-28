@@ -37,7 +37,7 @@ public class LoanController {
 
     @FXML
     private void initialize() {
-        // Set up table columns
+        // Configurer les colonnes du tableau
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         studentIdColumn.setCellValueFactory(cellData -> {
             try {
@@ -58,12 +58,12 @@ public class LoanController {
         loanDateColumn.setCellValueFactory(new PropertyValueFactory<>("loanDate"));
         returnDateColumn.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
 
-        // Load loans, books, and students
+        // Charger les prêts, les livres et les étudiants
         loadLoans();
         loadBooks();
         loadStudents();
 
-        // Select row to populate form
+        // Sélectionnez la ligne pour remplir le formulaire
         loanTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 studentComboBox.getSelectionModel().select(
@@ -97,7 +97,7 @@ public class LoanController {
         try {
             bookList.setAll(loanService.getAllBooks());
             bookComboBox.setItems(bookList);
-            // Set display text for ComboBox
+            // Définir le texte d'affichage pour ComboBox
             bookComboBox.setCellFactory(cb -> new javafx.scene.control.ListCell<Book>() {
                 @Override
                 protected void updateItem(Book item, boolean empty) {
@@ -121,7 +121,7 @@ public class LoanController {
         try {
             studentList.setAll(loanService.getAllStudents());
             studentComboBox.setItems(studentList);
-            // Set display text for ComboBox
+            // Définir le texte d'affichage pour ComboBox
             studentComboBox.setCellFactory(cb -> new javafx.scene.control.ListCell<Student>() {
                 @Override
                 protected void updateItem(Student item, boolean empty) {
@@ -148,13 +148,13 @@ public class LoanController {
         String loanDateText = loanDateField.getText().trim();
         String returnDateText = returnDateField.getText().trim();
 
-        // Validate required fields
+        // Valider les champs obligatoires
         if (selectedStudent == null || selectedBook == null || loanDateText.isEmpty()) {
             showErrorAlert("Validation Error", "Student, Book, and Loan Date are required.");
             return;
         }
 
-        // Validate loanDate format
+        // Valider le format loanDate
         LocalDate loanDate;
         try {
             loanDate = LocalDate.parse(loanDateText);
@@ -163,7 +163,7 @@ public class LoanController {
             return;
         }
 
-        // Validate returnDate format (if provided)
+        // Valider le format returnDate (si fourni)
         LocalDate returnDate = null;
         if (!returnDateText.isEmpty()) {
             try {
@@ -179,7 +179,7 @@ public class LoanController {
         }
 
         try {
-            // Check for existing active loan
+            // Vérifier le prêt actif existant
             if (loanService.activeLoanExists(selectedStudent.getId(), selectedBook.getId())) {
                 showErrorAlert("Validation Error", "An active loan for this student and book already exists.");
                 return;
@@ -211,13 +211,13 @@ public class LoanController {
         String loanDateText = loanDateField.getText().trim();
         String returnDateText = returnDateField.getText().trim();
 
-        // Validate required fields
+        // Valider les champs obligatoires
         if (selectedStudent == null || selectedBook == null || loanDateText.isEmpty()) {
             showErrorAlert("Validation Error", "Student, Book, and Loan Date are required.");
             return;
         }
 
-        // Validate loanDate format
+        // Valider le format loanDate
         LocalDate loanDate;
         try {
             loanDate = LocalDate.parse(loanDateText);
@@ -226,7 +226,7 @@ public class LoanController {
             return;
         }
 
-        // Validate returnDate format (if provided)
+        // Valider le format returnDate (si fourni)
         LocalDate returnDate = null;
         if (!returnDateText.isEmpty()) {
             try {
@@ -242,7 +242,7 @@ public class LoanController {
         }
 
         try {
-            // Check for existing active loan (exclude current loan)
+            // Vérifier le prêt actif existant (exclure le prêt actuel)
             if ((selectedStudent.getId() != selectedLoan.getStudentId() || selectedBook.getId() != selectedLoan.getBookId()) &&
                     loanService.activeLoanExists(selectedStudent.getId(), selectedBook.getId())) {
                 showErrorAlert("Validation Error", "An active loan for this student and book already exists.");
